@@ -1,0 +1,64 @@
+services:
+  # ── API server ──────────────────────────────────────────────────────────────
+  - type: web
+    name: resume-analyser-api
+    runtime: docker
+    dockerfilePath: ./server/Dockerfile
+    dockerContext: ./server
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: CLIENT_URL
+        value: https://your-app.vercel.app   # Replace with your Vercel URL
+      - key: DATABASE_URL
+        fromDatabase:
+          name: resume-analyser-db
+          property: connectionString
+      - key: REDIS_HOST
+        fromService:
+          name: resume-analyser-redis
+          type: redis
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          name: resume-analyser-redis
+          type: redis
+          property: port
+      - key: REDIS_PASSWORD
+        fromService:
+          name: resume-analyser-redis
+          type: redis
+          property: password
+      # Set these as secret env vars in the Render dashboard:
+      - key: JWT_ACCESS_SECRET
+        sync: false
+      - key: JWT_REFRESH_SECRET
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      # Optional:
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: PINECONE_API_KEY
+        sync: false
+      - key: PINECONE_INDEX
+        value: resume-analyser
+
+databases:
+  - name: resume-analyser-db
+    plan: starter
+    databaseName: resume_analyser
+    user: resume_analyser_user
+
+  - name: resume-analyser-redis
+    type: redis
+    plan: starter
+    ipAllowList: []   # allow only internal connections

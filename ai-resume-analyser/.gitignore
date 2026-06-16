@@ -1,0 +1,23 @@
+node_modules/
+dist/
+
+# Environment secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Build artefacts
+client/dist/
+server/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
