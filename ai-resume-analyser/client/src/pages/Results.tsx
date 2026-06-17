@@ -196,7 +196,7 @@ export default function Results() {
             <h3 className="text-sm font-semibold text-gray-900 mb-3">Rewrite suggestions</h3>
             <div className="space-y-4">
               {result.rewriteSuggestions.map((s, i) => (
-                <SuggestionCard key={i} suggestion={s} analysisId={id} index={i} />
+                <SuggestionCard key={i} suggestion={s} index={i} />
               ))}
             </div>
           </div>

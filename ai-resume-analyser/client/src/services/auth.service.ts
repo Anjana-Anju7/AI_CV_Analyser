@@ -11,4 +11,6 @@ export const authService = {
 
   refresh: (refreshToken: string) =>
     api.post('/auth/refresh', { refreshToken }).then((r) => r.data),
+
+  me: () => api.get('/auth/me').then((r) => r.data),
 };

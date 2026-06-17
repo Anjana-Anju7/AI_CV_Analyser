@@ -22,12 +22,15 @@ export const analysisService = {
     api
       .get(`/analyses/${id}/export`, { responseType: 'blob' })
       .then((r) => {
-        const url = URL.createObjectURL(r.data);
+        const blob = new Blob([r.data], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
         a.download = `analysis-${id}.pdf`;
+        document.body.appendChild(a);
         a.click();
-        URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
       }),
 
   share: (id: string) => api.post(`/analyses/${id}/share`).then((r) => r.data),

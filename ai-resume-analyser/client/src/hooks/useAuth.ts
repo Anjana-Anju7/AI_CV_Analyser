@@ -16,6 +16,7 @@ interface AuthState {
   register: (email: string, password: string, name?: string) => Promise<void>;
   logout: () => void;
   setTokens: (access: string, refresh: string) => void;
+  loginWithOAuth: (accessToken: string, refreshToken: string, user: User) => void;
 }
 
 export const useAuth = create<AuthState>()(
@@ -38,6 +39,9 @@ export const useAuth = create<AuthState>()(
       logout: () => set({ user: null, accessToken: null, refreshToken: null }),
 
       setTokens: (accessToken, refreshToken) => set({ accessToken, refreshToken }),
+
+      loginWithOAuth: (accessToken, refreshToken, user) =>
+        set({ accessToken, refreshToken, user }),
     }),
     {
       name: 'auth-store',

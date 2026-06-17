@@ -35,7 +35,7 @@ export async function register(email: string, password: string, name?: string) {
 
 export async function login(email: string, password: string) {
   const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) throw new Error('INVALID_CREDENTIALS');
+  if (!user || !user.passwordHash) throw new Error('INVALID_CREDENTIALS');
 
   const valid = await bcrypt.compare(password, user.passwordHash);
   if (!valid) throw new Error('INVALID_CREDENTIALS');
@@ -75,4 +75,35 @@ export async function refresh(rawToken: string) {
   });
 
   return { accessToken, refreshToken: newRefresh };
+}
+
+export async function googleOAuthLogin(googleId: string, email: string, name?: string) {
+  // Try to find by googleId first, then fall back to matching email (links existing accounts)
+  let user = await prisma.user.findFirst({
+    where: { OR: [{ googleId }, { email }] },
+  });
+
+  if (user) {
+    if (!user.googleId) {
+      user = await prisma.user.update({ where: { id: user.id }, data: { googleId } });
+    }
+  } else {
+    user = await prisma.user.create({
+      data: { email, googleId, name, passwordHash: null },
+    });
+  }
+
+  const { accessToken, refreshToken } = generateTokens(user.id);
+  const tokenHash = crypto.createHash('sha256').update(refreshToken).digest('hex');
+
+  await prisma.refreshToken.deleteMany({ where: { userId: user.id } });
+  await prisma.refreshToken.create({
+    data: {
+      token: tokenHash,
+      userId: user.id,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    },
+  });
+
+  return { accessToken, refreshToken, user: { id: user.id, email: user.email, name: user.name } };
 }

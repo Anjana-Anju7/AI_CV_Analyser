@@ -1,6 +1,9 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import { validate } from '../middleware/validate.middleware';
+import { authenticate, AuthRequest } from '../middleware/auth.middleware';
+import { passport } from '../lib/passport';
+import { prisma } from '../lib/prisma';
 import * as AuthService from '../services/auth.service';
 
 const router = Router();
@@ -55,6 +58,44 @@ router.post('/refresh', async (req, res, next) => {
 
 router.post('/logout', async (_req, res) => {
   res.json({ message: 'Logged out' });
+});
+
+// GET /api/auth/me — return current user from access token
+router.get('/me', authenticate, async (req: Request, res: Response, next) => {
+  const authReq = req as AuthRequest;
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: authReq.user.id },
+      select: { id: true, email: true, name: true },
+    });
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// GET /api/auth/google — redirect to Google consent screen
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'], session: false })
+);
+
+// GET /api/auth/google/callback — handle Google OAuth callback
+router.get('/google/callback', (req: Request, res: Response, next) => {
+  const clientUrl = process.env.CLIENT_URL ?? 'http://localhost:5173';
+
+  passport.authenticate('google', { session: false }, (err: Error | null, user: any) => {
+    if (err || !user) {
+      return res.redirect(`${clientUrl}/auth/callback?error=google_auth_failed`);
+    }
+    const { accessToken, refreshToken } = user;
+    return res.redirect(
+      `${clientUrl}/auth/callback` +
+        `?accessToken=${encodeURIComponent(accessToken)}` +
+        `&refreshToken=${encodeURIComponent(refreshToken)}`
+    );
+  })(req, res, next);
 });
 
 export default router;

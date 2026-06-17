@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import { apiLimiter } from './middleware/rateLimiter.middleware';
 import { errorHandler } from './middleware/error.middleware';
+import { passport } from './lib/passport';
 import authRoutes from './routes/auth.routes';
 import analysisRoutes from './routes/analysis.routes';
 import jdRoutes from './routes/jd.routes';
@@ -21,6 +22,7 @@ app.use(
   })
 );
 app.use(express.json({ limit: '10kb' }));
+app.use(passport.initialize());
 app.use(apiLimiter);
 
 app.use('/api/auth', authRoutes);

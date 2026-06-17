@@ -208,7 +208,7 @@ router.get('/:id/export', authenticate, async (req: Request, res: Response, next
       return res.status(409).json({ error: 'Analysis not yet complete' });
 
     const result = analysis.result as unknown as AnalysisResult;
-    const pdf = generateAnalysisPDF(result, analysis.jobDescription.slice(0, 60));
+    const pdf = await generateAnalysisPDF(result, analysis.jobDescription.slice(0, 60));
 
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(
