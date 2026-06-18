@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://resume-analyser-server-pb2q.onrender.com/api/$1"
+      "destination": "https://resume-analyser-server.onrender.com/api/$1"
     }
   ],
   "headers": [
