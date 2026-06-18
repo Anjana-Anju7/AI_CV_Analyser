@@ -2,7 +2,7 @@
 
 > Live at **[https://ai-cv-analyser-seven.vercel.app](https://ai-cv-analyser-seven.vercel.app)**
 
-An AI-powered web application that analyses resumes against job descriptions and provides a detailed score, ATS compatibility check, keyword gap analysis, and rewrite suggestions — powered by GPT-4o.
+An AI-powered web application that analyses resumes against job descriptions and provides a detailed score, ATS compatibility check, keyword gap analysis, and rewrite suggestions,powered by GPT-4o.
 
 ---
 
