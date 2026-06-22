@@ -30,7 +30,7 @@ router.post(
     try {
       if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
-      const { jobDescription } = req.body;
+      const { jobDescription, jobTitle } = req.body;
       if (!jobDescription || jobDescription.trim().length < 50) {
         return res
           .status(400)
@@ -52,6 +52,7 @@ router.post(
           userId: authReq.user.id,
           resumeUrl,
           resumeText: cleanText,
+          jobTitle: jobTitle?.trim() || null,
           jobDescription: jobDescription.slice(0, 8_000),
           status: 'QUEUED',
         },
@@ -92,6 +93,7 @@ router.get('/', authenticate, async (req: Request, res: Response, next) => {
           id: true,
           status: true,
           overallScore: true,
+          jobTitle: true,
           jobDescription: true,
           createdAt: true,
           resumeUrl: true,

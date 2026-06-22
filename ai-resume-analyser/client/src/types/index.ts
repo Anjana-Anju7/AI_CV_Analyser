@@ -39,6 +39,7 @@ export interface AnalysisSummary {
   id: string;
   status: string;
   overallScore: number | null;
+  jobTitle: string | null;
   jobDescription: string;
   createdAt: string;
   resumeUrl: string;

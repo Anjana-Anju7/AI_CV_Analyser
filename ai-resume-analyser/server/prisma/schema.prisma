@@ -35,6 +35,7 @@ model Analysis {
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   resumeUrl      String
   resumeText     String
+  jobTitle       String?
   jobDescription String
   status         String   @default("QUEUED")
   result         Json?

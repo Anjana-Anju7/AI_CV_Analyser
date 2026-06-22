@@ -13,6 +13,7 @@ import type { SavedJD, AnalysisStatus } from '../types';
 export default function Analyse() {
   const [file, setFile] = useState<File | null>(null);
   const [jd, setJd] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
   const [savedJDs, setSavedJDs] = useState<SavedJD[]>([]);
   const [showJDLibrary, setShowJDLibrary] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -34,7 +35,7 @@ export default function Analyse() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!file) return;
-    const id = await submit(file, jd);
+    const id = await submit(file, jd, jobTitle);
     if (id) setActiveId(id);
   }
 
@@ -62,6 +63,19 @@ export default function Analyse() {
               Resume (PDF or DOCX)
             </label>
             <DropZone onFile={setFile} />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Job title <span className="text-gray-400 font-normal">(optional)</span>
+            </label>
+            <input
+              type="text"
+              value={jobTitle}
+              onChange={(e) => setJobTitle(e.target.value)}
+              placeholder="e.g. Senior Software Engineer at Google"
+              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            />
           </div>
 
           <div>

@@ -51,7 +51,7 @@ export function HistoryList({ analyses }: Props) {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-gray-900 truncate">
-              {extractJdTitle(a.jobDescription)}
+              {a.jobTitle || extractJdTitle(a.jobDescription)}
             </p>
             <p className="text-xs text-gray-400 mt-0.5">
               {new Date(a.createdAt).toLocaleDateString('en-GB', {

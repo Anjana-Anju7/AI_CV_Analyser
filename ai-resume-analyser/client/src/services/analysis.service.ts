@@ -1,10 +1,11 @@
 import api from './api';
 
 export const analysisService = {
-  submit: (file: File, jobDescription: string) => {
+  submit: (file: File, jobDescription: string, jobTitle?: string) => {
     const form = new FormData();
     form.append('resume', file);
     form.append('jobDescription', jobDescription);
+    if (jobTitle?.trim()) form.append('jobTitle', jobTitle.trim());
     return api.post('/analyses', form).then((r) => r.data);
   },
 

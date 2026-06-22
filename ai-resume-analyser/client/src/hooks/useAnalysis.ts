@@ -6,11 +6,11 @@ export function useAnalysis() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function submit(file: File, jobDescription: string) {
+  async function submit(file: File, jobDescription: string, jobTitle?: string) {
     setSubmitting(true);
     setError(null);
     try {
-      const data = await analysisService.submit(file, jobDescription);
+      const data = await analysisService.submit(file, jobDescription, jobTitle);
       setAnalysisId(data.id);
       return data.id as string;
     } catch (err: any) {
