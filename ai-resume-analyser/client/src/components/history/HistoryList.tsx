@@ -6,6 +6,17 @@ interface Props {
   analyses: AnalysisSummary[];
 }
 
+const JD_HEADER_PATTERNS = /^(what you(('|'| wi)ll do|'re looking for)|about (the role|us|this role)|responsibilities|requirements|the role|overview|job description|who you are|your role|role overview)/i;
+
+function extractJdTitle(jd: string): string {
+  const lines = jd
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter((l) => l.length > 20 && !JD_HEADER_PATTERNS.test(l));
+  const first = lines[0] ?? jd.replace(/\s+/g, ' ').trim();
+  return first.length > 90 ? first.slice(0, 87) + '…' : first;
+}
+
 function scoreColor(score: number | null): string {
   if (score === null) return 'text-gray-400';
   if (score >= 75) return 'text-emerald-600';
@@ -40,7 +51,7 @@ export function HistoryList({ analyses }: Props) {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-gray-900 truncate">
-              {a.jobDescription.slice(0, 80)}…
+              {extractJdTitle(a.jobDescription)}
             </p>
             <p className="text-xs text-gray-400 mt-0.5">
               {new Date(a.createdAt).toLocaleDateString('en-GB', {

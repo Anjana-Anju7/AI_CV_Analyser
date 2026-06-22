@@ -8,6 +8,17 @@ const LABEL_COLOR: Record<string, string> = {
   Poor: '#ef4444',
 };
 
+const JD_HEADER_RE = /^(what you(('|'| wi)ll do|'re looking for)|about (the role|us|this role)|responsibilities|requirements|the role|overview|job description|who you are|your role|role overview)/i;
+
+function cleanJobTitle(raw: string): string {
+  const lines = raw
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter((l) => l.length > 15 && !JD_HEADER_RE.test(l));
+  const first = lines[0] ?? raw.replace(/\s+/g, ' ').trim();
+  return first.length > 80 ? first.slice(0, 77) + '...' : first;
+}
+
 export function generateAnalysisPDF(result: AnalysisResult, jobTitle: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     const buffers: Buffer[] = [];
@@ -17,11 +28,12 @@ export function generateAnalysisPDF(result: AnalysisResult, jobTitle: string): P
     doc.on('end', () => resolve(Buffer.concat(buffers)));
     doc.on('error', reject);
 
+    const roleTitle = cleanJobTitle(jobTitle);
+
     // Title
     doc.fontSize(20).font('Helvetica-Bold').text('Resume Analysis Report', { align: 'center' });
     doc.moveDown(0.5);
-    doc.fontSize(12).font('Helvetica').text(`Role: ${jobTitle}`);
-    doc.text(`Overall score: ${result.overallScore}/100`);
+    doc.fontSize(12).font('Helvetica').text(`Overall score: ${result.overallScore}/100`);
     doc.text(`Seniority match: ${result.seniorityMatch}`);
     doc.moveDown();
 
@@ -44,9 +56,9 @@ export function generateAnalysisPDF(result: AnalysisResult, jobTitle: string): P
         .fontSize(11)
         .font('Helvetica-Bold')
         .fillColor(color)
-        .text(`${name}: ${section.score}/100 — ${section.label}`);
+        .text(`${name}: ${section.score}/100 - ${section.label}`);
       section.highlights.forEach((h) => {
-        const bullet = h.type === 'positive' ? '✓' : '△';
+        const bullet = h.type === 'positive' ? '[+]' : '[-]';
         doc.fontSize(10).font('Helvetica').fillColor('#374151').text(`  ${bullet} ${h.text}`);
       });
       doc.moveDown(0.3);
@@ -57,7 +69,7 @@ export function generateAnalysisPDF(result: AnalysisResult, jobTitle: string): P
     // ATS
     doc.fontSize(14).font('Helvetica-Bold').text(`ATS Score: ${result.atsScore}/100`);
     result.atsItems.forEach((item) => {
-      const bullet = item.type === 'pass' ? '✓' : '⚠';
+      const bullet = item.type === 'pass' ? '[+]' : '[!]';
       doc.fontSize(10).font('Helvetica').text(`  ${bullet} ${item.message}`);
     });
     doc.moveDown();
