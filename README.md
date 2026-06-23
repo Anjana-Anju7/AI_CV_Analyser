@@ -70,7 +70,10 @@ AI_CV_Analyser/
 ---
 ## Screenshots
 
-<img src="3.png" width="700" alt="Analyse page" />
+<p>
+  <img src="3.png" width="48%" alt="Analyse page" />
+  <img src="4.png" width="48%" alt="Results page" />
+</p>
 
 ---
 
