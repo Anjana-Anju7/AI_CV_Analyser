@@ -72,12 +72,12 @@ AI_CV_Analyser/
 
 <p>
   <img src="3.png" width="48%" alt="Analyse page" />
-   
+  &nbsp;
   <img src="4.png" width="48%" alt="Results page" />
 </p>
 <p>
   <img src="5.png" width="48%" alt="History page" />
-
+   &nbsp;
   <img src="6.png" width="48%" alt="Job Library" />
 </p>
 
