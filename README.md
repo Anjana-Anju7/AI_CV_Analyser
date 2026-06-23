@@ -68,6 +68,11 @@ AI_CV_Analyser/
 ```
 
 ---
+##Screenshots
+
+![image alt](https://github.com/Anjana-Anju7/AI_CV_Analyser/blob/main/1.png?raw=true)
+
+---
 
 ## Render Environment Variables
 
