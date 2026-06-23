@@ -70,13 +70,7 @@ AI_CV_Analyser/
 ---
 ## Screenshots
 
-![image alt](https://github.com/Anjana-Anju7/AI_CV_Analyser/blob/main/3.png?raw=true)
-
-![image alt](https://github.com/Anjana-Anju7/AI_CV_Analyser/blob/main/4.png?raw=true)
-
-![image alt](https://github.com/Anjana-Anju7/AI_CV_Analyser/blob/main/5.png?raw=true)
-
-![image alt](https://github.com/Anjana-Anju7/AI_CV_Analyser/blob/main/6.png?raw=true)
+<img src="3.png" width="700" alt="Analyse page" />
 
 ---
 
