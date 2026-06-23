@@ -68,9 +68,15 @@ AI_CV_Analyser/
 ```
 
 ---
-##Screenshots
+## Screenshots
 
-![image alt](https://github.com/Anjana-Anju7/AI_CV_Analyser/blob/main/1.png?raw=true)
+![image alt](https://github.com/Anjana-Anju7/AI_CV_Analyser/blob/main/3.png?raw=true)
+
+![image alt](https://github.com/Anjana-Anju7/AI_CV_Analyser/blob/main/4.png?raw=true)
+
+![image alt](https://github.com/Anjana-Anju7/AI_CV_Analyser/blob/main/5.png?raw=true)
+
+![image alt](https://github.com/Anjana-Anju7/AI_CV_Analyser/blob/main/6.png?raw=true)
 
 ---
 
