@@ -71,14 +71,17 @@ AI_CV_Analyser/
 ## Screenshots
 
 <p>
-  <img src="3.png" width="48%" alt="Analyse page" />
+  <img src="3.png" width="47%" alt="Analyse page" />
   &nbsp;
-  <img src="4.png" width="48%" alt="Results page" />
+  <img src="4.png" width="47%" alt="Results page" />
 </p>
+
+<br>
+
 <p>
-  <img src="5.png" width="48%" alt="History page" />
-   &nbsp;
-  <img src="6.png" width="48%" alt="Job Library" />
+  <img src="5.png" width="47%" alt="Job Library" />
+  &nbsp;
+  <img src="6.png" width="47%" alt="History page" />
 </p>
 
 ---
