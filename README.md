@@ -76,7 +76,7 @@ AI_CV_Analyser/
   <img src="4.png" width="47%" alt="Results page" />
 </p>
 
-<br>
+
 
 <p>
   <img src="5.png" width="47%" alt="Job Library" />
